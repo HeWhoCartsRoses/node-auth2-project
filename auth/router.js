@@ -15,10 +15,13 @@ router.post("/register", (req, res) => {
     .catch(err => console.log(err));
 });
 router.post("/login", (req, res) => {
-  let { username, password } = req.body;
+  let {
+    username,
+    password
+  } = req.body;
   Users.findBy({
-    username
-  })
+      username
+    })
     .first()
     .then(user => {
       if (user && bcrypt.compareSync(password, user.password)) {
@@ -41,7 +44,11 @@ router.post("/login", (req, res) => {
 function generateToken(user) {
   const payload = {
     subject: user.id,
-    username: user.username
+    username: user.username,
+    role: user.role
+    //here is where you add extra data you big dum dum
+    //nothing sensitive??
+    //TODO: find where to store sensitive
   };
 
   const options = {
